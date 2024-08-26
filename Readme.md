@@ -9,7 +9,7 @@ AWS 서비스인 API Gateway, Lambda, 그리고 DynamoDB를 사용하여 서버�
 
 ## AWS Architecture
 
-![Diagram](/blob/main/shrink.caput.cloud.drawio.png)
+![Diagram](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FLrpKi%2FbtsJenZOwY6%2F9NDayV6o5ZWEguMq1OrAr1%2Fimg.png)
 
 
 ## 🔗 Links
