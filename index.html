@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shortener</title>
+        <style>
+            body, html {
+                height: 100%;
+                margin: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                font-family: Arial, sans-serif;
+            }
+            input[type="text"] {
+                width: 300px; /* 기본 너비 */
+                height: 40px;
+                border: 2px solid #ddd;
+                border-radius: 50px; /* 둥근 모서리 */
+                outline: none;
+                padding: 8px 16px;
+                transition: width 0.3s ease; /* 너비 변경 애니메이션 */
+                text-align: center;
+            }
+            input[type="text"]:focus {
+                width: 500px; /* 포커스 시 너비 */
+                border-color: #0056b3; /* 포커스 시 테두리 색상 변경 */
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const input = document.querySelector('input[type="text"]');
+                const copyBtn = document.getElementById('copyButton');
+
+                input.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    const data = { value: input.value };
+                    fetch('/create', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data.body.url_short);
+                        input.value = data.body.url_short; // 서버 응답을 입력창에 표시
+                        copyBtn.style.display = 'inline'; // 복사 버튼 표시
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                }
+                });
+
+                copyBtn.addEventListener('click', function() {
+                navigator.clipboard.writeText(input.value).then(() => {
+                    alert('Copied to clipboard!');
+                }).catch(err => {
+                    alert('Error in copying text: ', err);
+                });
+                });
+            });
+          </script>
+    </head>
+    <body>
+        <h1>CAPUT.CLOUD</h1>
+        <p>Private URL Shortener</p>
+        <input type="text" placeholder="🔗 Enter your Long URL here 🔗">
+        <button id="copyButton" style="display:none;">복사</button>
+    </body>
+</html>
